@@ -1,7 +1,7 @@
-import 'package:complete_advance_flutter/presentation/color_manager.dart';
-import 'package:complete_advance_flutter/presentation/font_manager.dart';
-import 'package:complete_advance_flutter/presentation/style_manager.dart';
-import 'package:complete_advance_flutter/presentation/values_manager.dart';
+import 'package:complete_advance_flutter/presentation/Resources/color_manager.dart';
+import 'package:complete_advance_flutter/presentation/Resources/font_manager.dart';
+import 'package:complete_advance_flutter/presentation/Resources/style_manager.dart';
+import 'package:complete_advance_flutter/presentation/Resources/values_manager.dart';
 import 'package:flutter/material.dart';
 
 ThemeData getApplicationTheme() {
@@ -102,14 +102,14 @@ ThemeData getApplicationTheme() {
         ),
       ),
       focusedErrorBorder: OutlineInputBorder(
-        borderSide:
-            BorderSide(color: ColorManager.error, width: AppSize.s1_5),
+        borderSide: BorderSide(color: ColorManager.error, width: AppSize.s1_5),
         borderRadius: const BorderRadius.all(
           Radius.circular(AppSize.s8),
         ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ColorManager.primary, width: AppSize.s1_5),
+        borderSide:
+            BorderSide(color: ColorManager.primary, width: AppSize.s1_5),
         borderRadius: const BorderRadius.all(
           Radius.circular(AppSize.s8),
         ),

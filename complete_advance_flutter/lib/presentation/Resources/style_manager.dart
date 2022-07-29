@@ -1,5 +1,5 @@
 //  getTextstyle
-import 'package:complete_advance_flutter/presentation/font_manager.dart';
+import 'package:complete_advance_flutter/presentation/Resources/font_manager.dart';
 import 'package:flutter/cupertino.dart';
 
 TextStyle _getTextStye({

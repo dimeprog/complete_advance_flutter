@@ -14,32 +14,39 @@ class OnBoardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(AppPadding.p8),
-          child: Text(
-            sliderObject.title,
-            style: Theme.of(context).textTheme.headline1,
-            textAlign: TextAlign.center,
-          ),
+    return Padding(
+      padding: const EdgeInsets.all(AppPadding.p8),
+      child: Container(
+        height: 400,
+        color: ColorManager.white,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(AppPadding.p8),
+              child: Text(
+                sliderObject.title,
+                style: Theme.of(context).textTheme.headline1,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(
+              height: AppSize.s20,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(AppPadding.p8),
+              child: Text(
+                sliderObject.subTitle,
+                style: Theme.of(context).textTheme.headline1,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(
+              height: AppSize.s60,
+            ),
+            SvgPicture.asset(sliderObject.image),
+          ],
         ),
-        const SizedBox(
-          height: AppSize.s20,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(AppPadding.p8),
-          child: Text(
-            sliderObject.title,
-            style: Theme.of(context).textTheme.headline1,
-            textAlign: TextAlign.center,
-          ),
-        ),
-        const SizedBox(
-          height: AppSize.s60,
-        ),
-        SvgPicture.asset(sliderObject.image),
-      ],
+      ),
     );
   }
 }

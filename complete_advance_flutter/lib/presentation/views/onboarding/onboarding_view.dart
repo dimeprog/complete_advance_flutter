@@ -1,9 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'dart:ui';
 
 import 'package:complete_advance_flutter/presentation/Resources/assets_manager.dart';
 import 'package:complete_advance_flutter/presentation/Resources/color_manager.dart';
 import 'package:complete_advance_flutter/presentation/Resources/strings_manager.dart';
 import 'package:complete_advance_flutter/presentation/Resources/values_manager.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -47,25 +50,23 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: AppSize.s1_5,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: ColorManager.white,
-          statusBarIconBrightness: Brightness.dark,
-        ),
-      ),
       backgroundColor: ColorManager.white,
-      body: PageView.builder(
-        onPageChanged: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        itemBuilder: (context, index) => OnBoardingPage(
-          sliderObject: _sliderList[index],
+      body: SafeArea(
+        child: PageView.builder(
+          controller: _pagecontroller,
+          onPageChanged: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          itemCount: 4,
+          itemBuilder: (context, index) => OnBoardingPage(
+            sliderObject: _sliderList[index],
+          ),
         ),
       ),
       bottomNavigationBar: Container(
+        height: AppSize.s90,
         color: ColorManager.white,
         child: Column(
           children: [
@@ -76,10 +77,11 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 child: Text(
                   AppStringManager.skip,
                   textAlign: TextAlign.end,
-                  style: Theme.of(context).textTheme.headline1,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
               ),
             ),
+            // adding nav container to onboarding screen
             _getOnBoardingBottomNavBar()
           ],
         ),
@@ -87,6 +89,25 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     );
   }
 
+//   function of arrow right
+  void _getToggleForword() {
+    if (_currentIndex <= 4) {
+      setState(() {
+        _currentIndex++;
+      });
+    }
+  }
+
+  // function of arrow left
+  void _getToggleBack() {
+    if (_currentIndex > 0) {
+      setState(() {
+        _currentIndex--;
+      });
+    }
+  }
+
+//  adding indicator
   Widget _getIndicatorCircle(int index) {
     if (index == _currentIndex) {
       return SvgPicture.asset(AssetManager.solidCircleIc);
@@ -94,32 +115,62 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     return SvgPicture.asset(AssetManager.hollowCircleIc);
   }
 
+//  building nav container
   Widget _getOnBoardingBottomNavBar() {
     return Container(
       color: ColorManager.primary,
       child: Padding(
         padding: const EdgeInsets.all(AppPadding.p8),
-        child: Row(
-          children: [
-            // adding left arrow
-            SizedBox(
-              height: AppSize.s20,
-              width: AppSize.s20,
-              child: SvgPicture.asset(AssetManager.leftArrow),
-            ),
-
-            for (int i = 0; i <= _sliderList.length; i++)
-              Padding(
-                padding: EdgeInsets.all(AppPadding.p8),
-                child: _getIndicatorCircle(i),
-              ),
-            // adding right arrow
-            SizedBox(
-              height: AppSize.s20,
-              width: AppSize.s20,
-              child: SvgPicture.asset(AssetManager.leftArrow),
-            )
-          ],
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // adding left arrow
+              if (_currentIndex != 0)
+                GestureDetector(
+                  onTap: () async {
+                    await _pagecontroller
+                        .animateToPage(_currentIndex,
+                            duration: const Duration(
+                              microseconds: DurationConstant.d300,
+                            ),
+                            curve: Curves.bounceIn)
+                        .then((value) => _getToggleBack());
+                  },
+                  child: SizedBox(
+                    height: AppSize.s20,
+                    width: AppSize.s20,
+                    child: SvgPicture.asset(AssetManager.leftArrow,
+                        fit: BoxFit.cover),
+                  ),
+                ),
+              const SizedBox(width: AppSize.s40),
+              // adding indicator loop
+              for (int i = 0; i < _sliderList.length; i++)
+                Padding(
+                  padding: const EdgeInsets.all(AppPadding.p8),
+                  child: _getIndicatorCircle(i),
+                ),
+              const SizedBox(width: AppSize.s40),
+              // adding right arrow
+              GestureDetector(
+                onTap: () async {
+                  await _pagecontroller
+                      .animateToPage(_currentIndex,
+                          duration: const Duration(
+                            microseconds: DurationConstant.d300,
+                          ),
+                          curve: Curves.bounceIn)
+                      .then((value) => _getToggleForword());
+                },
+                child: SizedBox(
+                  height: AppSize.s20,
+                  width: AppSize.s20,
+                  child: SvgPicture.asset(AssetManager.rightArrow),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

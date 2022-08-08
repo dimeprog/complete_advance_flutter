@@ -1,6 +1,6 @@
 import 'package:complete_advance_flutter/presentation/Resources/color_manager.dart';
 import 'package:complete_advance_flutter/presentation/Resources/style_manager.dart';
-import 'package:complete_advance_flutter/presentation/views/onboarding/widget/slider_obj.dart';
+import 'package:complete_advance_flutter/domain/slider_obj_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
